@@ -16,8 +16,33 @@ select.addEventListener('change', function(e){
 
 function calculateTotal(){
  const selectedSeats = container.querySelectorAll('.seat.selected');
- const selectedArea = [];
+ const selectedSeatsArr = [];
+ const seatsArr = [];
+
+ selectedSeats.forEach(function(seat){
+  selectedSeatsArr.push(seat);
+ });
+
+ //spread
+
+ seats.forEach(function(seat){
+  seatsArr.push(seat);
+ });
+
+ let selectedSeatIndexs =  selectedSeatsArr.map(function(seat){
+  return seatsArr.indexOf(seat);
+ });
+
  let selectedSeatCount = container.querySelectorAll('.seat.selected').length;
  count.innerText = selectedSeatCount;
  amount.innerText = selectedSeatCount *  select.value;
+
+
+ saveToLocalStorage(selectedSeatIndexs);
+}
+
+function saveToLocalStorage(index){
+ localStorage.setItem('selectedSeats', JSON.stringify(index));
+ localStorage.setItem('selectedMovieIndex', JSON.stringify(select.selectedIndex));
+
 }
